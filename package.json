@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "node index.mjs"
+    "memoryTest": "node app/memory/index.mjs",
+    "fsTest": "node app/fs/index.js"
   },
   "keywords": [],
   "author": "",

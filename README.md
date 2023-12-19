@@ -1,5 +1,9 @@
 # Projecto creado para la comisión de CoderHouse 55655
 
+## Como ejecutar el código
+
+Debemos en una consola ingresar el siguiente código `npm run ` y esto lo que hará es correr el código que se encuentra en el archivo `ìndex.mjs` el cual importa los otros dos archivos para usar las clases que se encuentran adentro
+
 ## sprint 1
 
 Se creo 3 archivos
@@ -12,6 +16,3 @@ Además, en cada uno de los Manager se creo las siguientes funciones
 - ReadOne: Trae una entrada basado en el ID
 - Create: Crea una entrada
 
-## Como ejecutar el código
-
-Debemos en una consola ingresar el siguiente código `npm run test` y esto lo que hará es correr el código que se encuentra en el archivo `ìndex.mjs` el cual importa los otros dos archivos para usar las clases que se encuentran adentro
