@@ -11,18 +11,20 @@ export class UserManager {
             if (!fs.existsSync(UserManager.path))
                 fs.writeFileSync(UserManager.path, JSON.stringify([], null, 2))
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
         
     }
 
-    static GetUsers = async () => {
-        const users = await JSON.parse(fs.readFileSync(UserManager.path, 'utf-8'))
-
-        if(!users)
+    GetUsers = async () => {
+        try {
+            const fileUser = await fs.promises.readFile(UserManager.path, 'utf-8')
+            return JSON.parse(fileUser)
+            
+        } catch (error) {
+            console.log(error.message)
             return []
-        
-        return users
+        }
     }
 
     Create  = async ({name, photo, email}) => {
@@ -30,9 +32,7 @@ export class UserManager {
             if(!name || !photo || !email)
                 throw new Error("Please not leave blank values")
 
-            const users = await UserManager.GetUsers()
-
-
+            const users = await this.GetUsers()
             let newUser = {id: users.length + 1, name, photo, email}
 
             users.push(newUser)
@@ -56,14 +56,15 @@ export class UserManager {
 
     Read = async () => {
         try {
-            const users = await UserManager.GetUsers()
+            const users = await this.GetUsers()
 
             if (users.length === 0)
                 throw new Error("No Users!")            
 
             return {
                 code: 200,
-                data: JSON.stringify(users, null, 2)
+                data: users,
+                data_stringify: JSON.stringify(users, null, 2)
             }
         } catch (error) {
             return {
@@ -75,7 +76,7 @@ export class UserManager {
 
     ReadOne = async (id) => {
         try {
-            const users = await UserManager.GetUsers() 
+            const users = await this.GetUsers() 
             const user = users.find((item) => item.id === id)
 
             if(!user)
@@ -83,7 +84,8 @@ export class UserManager {
             
             return {
                 code: 200,
-                data: JSON.stringify(user, null, 2)
+                data: users,
+                data_stringify: JSON.stringify(user, null, 2)
             }
         } catch (error) {
             return {

@@ -16,14 +16,14 @@ export class ProductManager {
     }
 
     static GetProducts = async () => {
-        const products = await JSON.parse(fs.readFileSync(ProductManager.path, 'utf-8'))
-
-        console.log(products)
-
-        if(!products)
+        try {
+            const fileProduct = await fs.promises.readFile(ProductManager.path, 'utf-8')
+            return JSON.parse(fileProduct)
+            
+        } catch (error) {
+            console.log(error.message)
             return []
-        
-        return products
+        }
     }
 
     Create  = async ({title, photo, price, stock}) => {
@@ -68,7 +68,8 @@ export class ProductManager {
 
             return {
                 code: 200,
-                data: products
+                data: products,
+                data_stringify: JSON.stringify(products, null, 2)
             }
         } catch (error) {
             return {
@@ -88,7 +89,8 @@ export class ProductManager {
             
             return {
                 code: 200,
-                data: product
+                data: product,
+                data_stringify: JSON.stringify(product, null, 2)
             }
         } catch (error) {
             return {

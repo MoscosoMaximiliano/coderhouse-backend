@@ -13,35 +13,35 @@ await userManager.Read().then(response => {
     if (response.code !== 200)
         console.log(response.msg)
     else
-        console.log(`Read user: ${response.data}`);
+        console.log(`\n====Read users==== \n${response.data_stringify}\n`);
 })
 
 await userManager.ReadOne(3).then(response => {
     if (response.code !== 200)
         console.log(response.msg);
     else
-        console.log(`ReadOne user: ${response.data}`);
+        console.log(`\n====ReadOne user==== \n${response.data_stringify}\n`);
 })
 
-// const productManager = new ProductManager()
+const productManager = new ProductManager()
 
-// await productManager.Create({ 
-//     title: "Harry Potter", 
-//     photo: "www.google.com", 
-//     price: 2032,
-//     stock: 20
-// }).then(response => console.log(response.msg))
+await productManager.Create({ 
+    title: "Harry Potter", 
+    photo: "www.google.com", 
+    price: 2032,
+    stock: 20
+}).then(response => console.log(response.msg))
 
-// await productManager.Read().then(response => {
-//     if (response.code !== 200)
-//         console.log(response.msg)
+await productManager.Read().then(response => {
+    if (response.code !== 200)
+        console.log(response.msg)
 
-//     console.log(`Read: ${response.data}`);
-// })
+    console.log(`\n====Read products==== \n${response.data_stringify}\n`);
+})
 
-// await productManager.ReadOne(1).then(response => {
-//     if (response.code !== 200)
-//         console.log(response.msg);
-//     else
-//         console.log(`ReadOne: ${response.data}`);
-// })
+await productManager.ReadOne(1).then(response => {
+    if (response.code !== 200)
+        console.log(response.msg);
+    else
+        console.log(`\n====ReadOne product==== \n${response.data_stringify}\n`);
+})

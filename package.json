@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "memoryTest": "node app/memory/index.mjs",
-    "fsTest": "node app/fs/index.js"
+    "sprint1": "node app/memory/index.mjs",
+    "sprint2": "node app/fs/index.js"
   },
   "keywords": [],
   "author": "",
