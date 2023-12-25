@@ -30,5 +30,6 @@ export class ProductManager {
 
     Read = () => ProductManager.#products
     ReadOne = (id) => ProductManager.#products.find((item) => item.id === id)
+    Destroy = (id) => ProductManager.#products.filter((x) => x.id !== id)
 }
 

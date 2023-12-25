@@ -1,7 +1,13 @@
-import fs from "fs";
+import fs from "fs"
+import path from "path"
+import { fileURLToPath } from 'url'
+import crypto from "crypto"
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export class ProductManager {
-    static path = "./app/fs/files/products.json"
+    static path = path.join(__dirname, "./files/products.json")
     constructor() {
         ProductManager.FileCheck()
     }
@@ -33,7 +39,7 @@ export class ProductManager {
 
             const products = await ProductManager.GetProducts()
             let newProduct = {
-                id: products.length + 1,
+                id: crypto.randomBytes(12).toString("hex"),
                 title,
                 photo,
                 price,
@@ -81,6 +87,7 @@ export class ProductManager {
 
     ReadOne = async (id) => {
         try {
+            console.log(id)
             const products = await ProductManager.GetProducts() 
             const product = products.find((item) => item.id === id)
 
@@ -102,3 +109,5 @@ export class ProductManager {
 }
 
 
+const products = new ProductManager()
+export default products

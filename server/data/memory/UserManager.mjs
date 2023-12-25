@@ -30,4 +30,5 @@ export class UserManager {
 
     Read = () => UserManager.#users
     ReadOne = (id) => UserManager.#users.find((item) => item.id === id)
+    Destroy = (id) => ProductManager.#users.filter((x) => x.id !== id)
 }

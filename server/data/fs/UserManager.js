@@ -1,7 +1,13 @@
-import fs from "fs";
+import fs from "fs"
+import path from "path"
+import { fileURLToPath } from 'url'
+import crypto from "crypto"
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export class UserManager {
-    static path = "./app/fs/files/users.json"
+    static path = path.join(__dirname, "./files/users.json")
     constructor(){
         UserManager.FileCheck()
     }
@@ -16,7 +22,7 @@ export class UserManager {
         
     }
 
-    GetUsers = async () => {
+    static GetUsers = async () => {
         try {
             const fileUser = await fs.promises.readFile(UserManager.path, 'utf-8')
             return JSON.parse(fileUser)
@@ -32,8 +38,8 @@ export class UserManager {
             if(!name || !photo || !email)
                 throw new Error("Please not leave blank values")
 
-            const users = await this.GetUsers()
-            let newUser = {id: users.length + 1, name, photo, email}
+            const users = await UserManager.GetUsers()
+            let newUser = {id: crypto.randomBytes(12).toString("hex"), name, photo, email}
 
             users.push(newUser)
 
@@ -56,7 +62,7 @@ export class UserManager {
 
     Read = async () => {
         try {
-            const users = await this.GetUsers()
+            const users = await UserManager.GetUsers()
 
             if (users.length === 0)
                 throw new Error("No Users!")            
@@ -76,7 +82,7 @@ export class UserManager {
 
     ReadOne = async (id) => {
         try {
-            const users = await this.GetUsers() 
+            const users = await UserManager.GetUsers() 
             const user = users.find((item) => item.id === id)
 
             if(!user)
@@ -94,4 +100,31 @@ export class UserManager {
             }
         }
     }
+
+    Destroy = async (id) => {
+        try {
+            const users = await UserManager.GetUsers()
+            const filteredUsers = users.filter((x) => x.id !== id)
+
+            await fs.promises.writeFile(
+                UserManager.path,
+                JSON.stringify(filteredUsers, null, 2)
+            );
+
+            return {
+                code: 200,
+                msg: "success"
+            }
+
+        } catch (error) {
+            return {
+                code: 400,
+                msg: error.message
+            }
+        }
+
+    }
 }
+
+const users = new UserManager()
+export default users
