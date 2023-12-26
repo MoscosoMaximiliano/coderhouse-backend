@@ -87,7 +87,6 @@ export class ProductManager {
 
     ReadOne = async (id) => {
         try {
-            console.log(id)
             const products = await ProductManager.GetProducts() 
             const product = products.find((item) => item.id === id)
 

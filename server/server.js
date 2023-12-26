@@ -61,8 +61,7 @@ server.get("/api/products/:pid", async (req, res) => {
 
 server.get("/api/users", async (req, res) => {
     try {
-        const response = await userManager.ReadOne(uid)
-        console.log(response)
+        const response = await userManager.Read()
         response.code === 404 ? res.send({
             success: false,
             message: "not found!"
@@ -83,7 +82,6 @@ server.get("/api/users/:uid", async (req, res) => {
     try {
         const {uid} = req.query
         const response = await userManager.ReadOne(uid)
-        console.log(response)
         response.code === 404 ? res.send({
             success: false,
             message: "not found!"
