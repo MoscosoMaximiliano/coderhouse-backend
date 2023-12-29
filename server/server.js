@@ -14,8 +14,7 @@ server.listen(PORT, ready)
 server.use(express.urlencoded({extended: true}))
 
 server.get("/", (req, res) => {
-    res.send({
-        code: 200,
+    res.status(200).send({
         msg: "Is working"
     })
 })
@@ -23,16 +22,16 @@ server.get("/", (req, res) => {
 server.get("/api/products", async (req, res) => {
     try {
         const response = await productManager.Read()
-        response.code === 404 ? res.send({
+        response.code === 404 ? res.status(404).send({
             success: false,
             message: "not found!",
-        }) : res.send({
+        }) : res.status(200).send({
             success: true,
             response: response.data,
         })        
     } catch (error) {
         console.log(error.message)
-        res.send({
+        res.status(404).send({
             success: false,
             message: "not found!"
         })
@@ -43,16 +42,16 @@ server.get("/api/products/:pid", async (req, res) => {
     try {
         const {pid} = req.params
         const response = await productManager.ReadOne(pid)
-        response.code === 404 ? res.send({
+        response.code === 404 ? res.status(404).send({
             success: false,
             message: "not found!"
-        }) : res.send({
+        }) : res.status(200).send({
             success: true,
             response: response.data
         })
     } catch (error) {
         console.log(error.message)
-        res.send({
+        res.status(404).send({
             success: false,
             message: "not found!"
         })
@@ -62,16 +61,16 @@ server.get("/api/products/:pid", async (req, res) => {
 server.get("/api/users", async (req, res) => {
     try {
         const response = await userManager.Read()
-        response.code === 404 ? res.send({
+        response.code === 404 ? res.status(404).send({
             success: false,
             message: "not found!"
-        }) : res.send({
+        }) : res.status(200).send({
             success: true,
             response: response.data
         })
     } catch (error) {
         console.log(error.message)
-        res.send({
+        res.status(404).send({
             success: false,
             message: "not found!"
         })
@@ -82,16 +81,16 @@ server.get("/api/users/:uid", async (req, res) => {
     try {
         const {uid} = req.query
         const response = await userManager.ReadOne(uid)
-        response.code === 404 ? res.send({
+        response.code === 404 ? res.status(404).send({
             success: false,
             message: "not found!"
-        }) : res.send({
+        }) : res.status(200).send({
             success: true,
             response: response.data
         })
     } catch (error) {
         console.log(error.message)
-        res.send({
+        res.status(404).send({
             success: false,
             message: "not found!"
         })
