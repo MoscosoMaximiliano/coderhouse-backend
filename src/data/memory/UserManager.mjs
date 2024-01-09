@@ -30,5 +30,10 @@ export class UserManager {
 
     Read = () => UserManager.#users
     ReadOne = (id) => UserManager.#users.find((item) => item.id === id)
-    Destroy = (id) => ProductManager.#users.filter((x) => x.id !== id)
+    Destroy = (id) => UserManager.#users.filter((x) => x.id !== id)
+    Update = (id, data) => {
+        const userId = UserManager.#users.findIndex((user) => user.id === id)
+
+        UserManager.#users[userId] = data
+    }
 }
