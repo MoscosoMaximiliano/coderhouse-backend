@@ -1,8 +1,8 @@
 const OrderHandler = (req, res, next) => {
     console.log(req.body)
-    const {title, price, stock, photo} = req.body
-    if(!title || !price || !stock || !photo) {
-        const error = new Error("Title, Price, Stock and Photo is required")
+    const {pid, uid, quantity, state} = req.body
+    if(!pid || !uid || !quantity || !state) {
+        const error = new Error("Product ID, User ID, Quantity and State is required")
         error.statusCode = 404
         throw error
     } else {
