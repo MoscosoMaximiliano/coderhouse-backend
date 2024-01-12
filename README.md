@@ -83,3 +83,44 @@ Se crearón los Endpoints del server los cuales son:
 - /api/users/:uid
 
 En caso de querer hacer pruebas y cambios teniendo un hot-reload hay que correr el servidor con `npm run dev` en caso contrarío de querer correrlo para productivo correr `npm run start`
+
+
+## challange1
+
+Se agregarón las siguientes dependencias:
+
+- multen
+- morgan
+
+Se cambio la estructura del código para trabajar con express
+![TreeFolderChallange1](public/image.png)
+
+Se creo un nuevo manager que es el de `Orders` con los métodos:
+
+- create
+- read
+- readByUser
+- update
+- destroy
+
+y tambien la respectiva api con los endpoints:
+
+- POST /api/orders
+- GET /api/orders/:uid
+- GET /api/orders/:oid
+
+Tambien se agregarón nuevos endpoints:
+
+- DELETE /api/products/:pid
+- PUT /api/products/:pid 
+
+Se agregarón nuevos middlewares:
+
+- errorHandler
+- orderHandler
+- pathHandler
+- productHandler
+- userHandler
+
+Se agrego un nuevo js llamado `utils` el cual ayuda a traer el `__dirname` y tambien tiene los métodos de lectura de archivo, los cuales antes se encontraban en los manager, esto se hizo para no tener tanto código repetido y de fácil acceso
+

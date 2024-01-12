@@ -31,5 +31,10 @@ export class ProductManager {
     Read = () => ProductManager.#products
     ReadOne = (id) => ProductManager.#products.find((item) => item.id === id)
     Destroy = (id) => ProductManager.#products.filter((x) => x.id !== id)
+    Update = (id, data) => {
+        const userId = ProductManager.#products.findIndex((user) => user.id === id)
+
+        ProductManager.#products[userId] = data
+    }
 }
 
