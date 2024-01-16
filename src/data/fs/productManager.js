@@ -32,7 +32,8 @@ class ProductManager {
 
     Read = async () => {
         try {
-            return await GetAllData(ProductManager.path)
+            const data = await GetAllData(ProductManager.path)
+            return data
         } catch (error) {
             throw error
         }

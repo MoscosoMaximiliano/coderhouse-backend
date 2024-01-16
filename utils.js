@@ -17,6 +17,7 @@ const GetAllData = async (filePath) => {
         const completePath = path.join(__dirname, filePath)
         let data = await fs.promises.readFile(completePath, 'utf-8')
         data = JSON.parse(data)
+        
         return data
         
     } catch (error) {

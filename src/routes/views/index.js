@@ -20,12 +20,20 @@ viewsRouter.get('/register', async (req, res, next) => {
     }
 })
 
-viewsRouter.get('/products', async (req, res, next) => {
-    
+viewsRouter.get('/real', async (req, res, next) => {
+    try {
+        return res.render('real', {})
+    } catch (error) {
+        next(error)
+    }
 })
 
-viewsRouter.get('/new-product', async (req, res, next) => {
-    
+viewsRouter.get('/form', async (req, res, next) => {
+    try {
+        return res.render('form', {})
+    } catch (error) {
+        next(error)
+    }
 })
 
 viewsRouter.get('/orders', async (req, res, next) => {
