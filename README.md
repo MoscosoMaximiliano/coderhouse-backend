@@ -124,3 +124,20 @@ Se agregarón nuevos middlewares:
 
 Se agrego un nuevo js llamado `utils` el cual ayuda a traer el `__dirname` y tambien tiene los métodos de lectura de archivo, los cuales antes se encontraban en los manager, esto se hizo para no tener tanto código repetido y de fácil acceso
 
+## sprint 4
+
+Nuevas dependencias agregadas:
+
+- socket.io
+- express-handlebars
+
+Se creo el websocket con el servidor para poder tener una comunicación entre front y back, además de eso se crearón los handlebars:
+- form (/form)
+- index (/)
+- real (/real)
+- register (/register)
+- main (Layout)
+
+Se creo tambien el Router de Views para que haga uso de los handlebars.
+
+
