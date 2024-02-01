@@ -140,4 +140,23 @@ Se creo el websocket con el servidor para poder tener una comunicación entre fr
 
 Se creo tambien el Router de Views para que haga uso de los handlebars.
 
+## sprint 5
+
+Agregado las siguientes dependencias:
+
+- mongoose
+- dotenvs
+
+Agregado los modelos de mongo para que pueda trabajar con los schemas
+
+- OrderModel
+- ProductModel
+- UserModel
+
+Actualizado los endpoints para el uso de mongodb
+
+- orders
+- products
+- users
+
 

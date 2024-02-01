@@ -43,7 +43,7 @@ class MongoManager {
           throw error;
         }
       }
-      async Rpdate(id, data) {
+      async Update(id, data) {
         try {
           const opt = { new: true };
           const one = await this.model.findByIdAndUpdate(id, data, opt);
