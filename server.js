@@ -1,4 +1,5 @@
 import express from "express"
+import  "dotenv/config.js"
 
 import router from "./src/routes/index.js"
 import pathHandler from "./src/middleware/pathHandler.js";
@@ -13,11 +14,14 @@ import { Server } from 'socket.io'
 import { createServer } from 'http'
 import connectionOnSocket from "./src/utils/socket.js";
 
+import dbConnection from './src/utils/db.js'
+
 const server = express()
 const PORT = 8080
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
+    dbConnection()
 }
 
 //websocket
