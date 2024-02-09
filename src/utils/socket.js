@@ -1,11 +1,11 @@
 import { socketServer } from "../../server.js";
-import products from "../data/fs/productManager.js";
+import { ProductDB } from "../data/mongo/MongoManager.js";
 import PropsProductsHandler from "./propsProductsHandler.js";
 
 
 export default async (socket) => {
     console.log(`client ${socket.id} connected`)
-    socket.emit("products", await products.Read())
+    socket.emit("products", await ProductDB.Read({}))
     
     socket.on("new product", async (data) => {
         try {
@@ -13,8 +13,8 @@ export default async (socket) => {
             console.log(data)
             // add the product
             PropsProductsHandler(data)
-            products.Create(data)
-            socketServer.emit("products", await products.Read())
+            ProductDB.Create(data)
+            socketServer.emit("products", await ProductDB.Read())
         } catch (error) {
             console.log(error)
         }

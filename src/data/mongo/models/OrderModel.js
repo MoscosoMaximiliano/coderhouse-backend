@@ -1,4 +1,5 @@
 import { model, Schema, Types } from 'mongoose'
+import mongoosePaginate from "mongoose-paginate-v2";
 
 let collection = 'orders'
 
@@ -15,15 +16,17 @@ const schema = new Schema(
     {timestamps: true}
 )
 
+schema.plugin(mongoosePaginate)
+
 // Middleware MongoDB
 schema.pre('find', () => {
-    this.populate("product_id", "title price photo")
+    this.populate("products_id", "title price photo")
 })
 
 
 // -__v remove the version key
 schema.pre('find', () => {
-    this.populate("user_id", "-password -role -createAt -updatedAt -__v")
+    this.populate("users_id", "-password -role -createAt -updatedAt -__v")
 })
 
 const Order = model(collection, schema)
