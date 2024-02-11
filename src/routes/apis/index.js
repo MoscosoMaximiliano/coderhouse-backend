@@ -8,6 +8,6 @@ const apiRouter = Router()
 
 apiRouter.use("/users", usersRouter)
 apiRouter.use("/products", productsRouter)
-// apiRouter.use("/orders", ordersRouter)
+apiRouter.use("/orders", ordersRouter)
 
 export default apiRouter

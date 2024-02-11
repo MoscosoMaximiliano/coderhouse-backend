@@ -20,14 +20,6 @@ viewsRouter.get('/register', async (req, res, next) => {
     }
 })
 
-viewsRouter.get('/real', async (req, res, next) => {
-    try {
-        return res.render('real', {})
-    } catch (error) {
-        next(error)
-    }
-})
-
 viewsRouter.get('/form', async (req, res, next) => {
     try {
         return res.render('form', {})

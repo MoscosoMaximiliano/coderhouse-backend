@@ -159,4 +159,16 @@ Actualizado los endpoints para el uso de mongodb
 - products
 - users
 
+## challange 2
 
+Se agregaron las siguientes dependencias:
+
+- mongoose-paginate-v2
+
+Se adapto las vistas de handlebar para que funcionen con mongodb
+
+Se agrego el endpoint:
+
+- orders/total/:uid
+
+Se borraron cosas que ya no se usaban
