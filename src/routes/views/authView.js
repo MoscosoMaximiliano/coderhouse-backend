@@ -12,9 +12,7 @@ viewsRouter.get('/register', async (req, res, next) => {
 
 viewsRouter.get('/login', async (req, res, next) => {
     try {
-        return res.render('index', {
-            username: "Maxi"
-        })
+        return res.render('login', {})
     } catch (error) {
         next(error)
     }
