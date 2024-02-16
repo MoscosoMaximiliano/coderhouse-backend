@@ -172,3 +172,16 @@ Se agrego el endpoint:
 - orders/total/:uid
 
 Se borraron cosas que ya no se usaban
+
+## sprint6
+
+Se agregaron las siguientes dependencias:
+
+- cookie-parser
+- session-file-store
+- express-session
+- connect-mongo
+
+Se agregaron el handlebar de login
+
+Tambien se agrego la api de auth
