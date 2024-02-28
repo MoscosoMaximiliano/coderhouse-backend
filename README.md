@@ -185,3 +185,8 @@ Se agregaron las siguientes dependencias:
 Se agregaron el handlebar de login
 
 Tambien se agrego la api de auth
+
+
+## refactor code
+
+Cambios en el código para refactorizar
