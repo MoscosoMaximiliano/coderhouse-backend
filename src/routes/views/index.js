@@ -1,4 +1,7 @@
 import { Router } from 'express'
+import authViewRouter from "./authView.js";
+import productsViewRouter from "./productsView.js";
+
 
 const viewsRouter = Router()
 
@@ -12,24 +15,11 @@ viewsRouter.get('/', async (req, res, next) => {
     }
 })
 
-viewsRouter.get('/register', async (req, res, next) => {
-    try {
-        return res.render('register', {})
-    } catch (error) {
-        next(error)
-    }
-})
-
-viewsRouter.get('/form', async (req, res, next) => {
-    try {
-        return res.render('form', {})
-    } catch (error) {
-        next(error)
-    }
-})
+viewsRouter.use('/auth', authViewRouter)
+viewsRouter.use('/products', productsViewRouter)
 
 viewsRouter.get('/orders', async (req, res, next) => {
-    
+
 })
 
 export default viewsRouter

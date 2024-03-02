@@ -9,6 +9,10 @@ import {__dirname} from "./utils.js";
 import morgan from "morgan";
 
 import { engine } from 'express-handlebars'
+import cookieParser from 'cookie-parser'
+import expressSession from "express-session";
+import sessionFileStore from 'session-file-store'
+import MongoStore from 'connect-mongo'
 
 import { Server } from 'socket.io'
 import { createServer } from 'http'
@@ -17,7 +21,7 @@ import connectionOnSocket from "./src/utils/socket.js";
 import dbConnection from './src/utils/db.js'
 
 const server = express()
-const PORT = 8080
+const PORT = 9999
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
@@ -37,6 +41,16 @@ server.use(express.json())
 server.use(express.urlencoded({extended: true}))
 server.use(express.static(__dirname+"/public"))
 server.use(morgan("dev"))
+
+
+const FileStore = sessionFileStore(expressSession)
+server.use(cookieParser(process.env.SECRET_SESSION))
+server.use(expressSession({
+    store: new MongoStore({mongoUrl: process.env.MONGODB_URI, ttl: 7 * 24 * 60 * 60}),
+    secret: process.env.SECRET_SESSION,
+    resave: true,
+    saveUninitialized: true
+}))
 
 //handlebars
 

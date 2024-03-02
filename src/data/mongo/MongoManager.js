@@ -122,6 +122,15 @@ class MongoManager {
       throw error;
     }
   }
+
+  async ReadByEmail(email) {
+    try {
+      const one = await this.model.findOne({ email });
+      return one;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 const UserDB = new MongoManager(User)
