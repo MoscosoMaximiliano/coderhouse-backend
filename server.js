@@ -21,7 +21,7 @@ import connectionOnSocket from "./src/utils/socket.js";
 import dbConnection from './src/utils/db.js'
 
 const server = express()
-const PORT = 8080
+const PORT = 9999
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
@@ -41,6 +41,7 @@ server.use(express.json())
 server.use(express.urlencoded({extended: true}))
 server.use(express.static(__dirname+"/public"))
 server.use(morgan("dev"))
+
 
 const FileStore = sessionFileStore(expressSession)
 server.use(cookieParser(process.env.SECRET_SESSION))

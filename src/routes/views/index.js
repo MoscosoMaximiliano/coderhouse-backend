@@ -15,11 +15,11 @@ viewsRouter.get('/', async (req, res, next) => {
     }
 })
 
-viewsRouter.get('/auth', authViewRouter)
-viewsRouter.get('/products', productsViewRouter)
+viewsRouter.use('/auth', authViewRouter)
+viewsRouter.use('/products', productsViewRouter)
 
 viewsRouter.get('/orders', async (req, res, next) => {
-    
+
 })
 
 export default viewsRouter
