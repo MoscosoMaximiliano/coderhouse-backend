@@ -1,84 +1,58 @@
-import { Router } from "express";
-import UserManager from "../../data/fs/userManager.js";
+import CustomRouter from "../CustomRouter.js";
 import UserHandler from "../../middleware/userHandler.js";
 
 import { UserDB } from '../../data/mongo/MongoManager.js'
 
-const usersRouter = Router()
+export default class UsersRouter extends CustomRouter {
+    init() {
+        this.Create("/", [ "admin" ], UserHandler, async (req, res, next) => {
+            try {
+                const response = await UserDB.Create(req.body)
+                res.success201(response)
+            } catch (error) {
+                return next(error)
+            }
+        });
 
-usersRouter.post("/", async (req, res, next) => {
-    try {
-        const data = req.body;
-        const response = await UserDB.Create(data);
-        return res.json({
-            statusCode: 201,
-            response,
+        this.Read("/", [ 'public' ], async (req, res, next) => {
+            try {
+                const response = await UserDB.Read({})
+                res.success200(response)
+            } catch (error) {
+                return next(error)
+            }
         });
-    } catch (error) {
-        return next(error);
-    }
-});
-usersRouter.get("/", async (req, res, next) => {
-    try {
-        const all = await UserDB.Read({});
-        //mas adelante read va a necesitar un parámetros para
-        //paginar, ordenar y filtrar
-        return res.json({
-            statusCode: 200,
-            response: all,
+
+        this.Read("/:uid", [ 'public' ], async (req, res, next) => {
+            try {
+                const { uid } = req.params
+                const response = await UserDB.ReadOne(uid)
+                res.success200(response)
+            } catch (error) {
+                return next(error)
+            }
         });
-    } catch (error) {
-        return next(error);
-    }
-});
-usersRouter.get("/stats", async (req, res, next) => {
-    try {
-        const all = await UserDB.Stats({});
-        return res.json({
-            statusCode: 200,
-            response: all,
+
+        this.Update("/:uid", [ 'admin' ], UserHandler, async (req, res, next) => {
+            try {
+                const { uid } = req.params
+                const response = await UserDB.Update(uid, req.body)
+                res.success200(response)
+            } catch (error) {
+                return next(error)
+            }
         });
-    } catch (error) {
-        return next(error);
-    }
-});
-usersRouter.get("/:uid", async (req, res, next) => {
-    try {
-        const { uid } = req.params;
-        const one = await UserDB.ReadOne(uid);
-        return res.json({
-            statusCode: 200,
-            response: one,
+
+        this.Destroy("/:uid", [ 'admin' ], async (req, res, next) => {
+            try {
+                const { uid } = req.params
+                const response = await UserDB.Destroy(uid)
+                res.success200(response)
+            } catch (error) {
+                return next(error)
+            }
         });
-    } catch (error) {
-        return next(error);
-    }
-});
-usersRouter.put("/:uid", async (req, res, next) => {
-    try {
-        const { uid } = req.params;
-        const data = req.body;
-        const one = await UserDB.Update(uid, data);
-        return res.json({
-            statusCode: 200,
-            response: one,
-        });
-    } catch (error) {
-        return next(error);
-    }
-});
-usersRouter.delete("/:uid", async (req, res, next) => {
-    try {
-        const { uid } = req.params;
-        const one = await UserDB.Destroy(uid);
-        return res.json({
-            statusCode: 200,
-            response: one,
-        });
-    } catch (error) {
-        return next(error);
-    }
-});
 
 
-export default usersRouter
+    }
+}
