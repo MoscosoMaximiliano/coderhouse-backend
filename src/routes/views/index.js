@@ -1,25 +1,23 @@
-import { Router } from 'express'
-import authViewRouter from "./authView.js";
-import productsViewRouter from "./productsView.js";
+import AuthViewRouter from "./authView.js";
+import ProductsViewRouter from "./productsView.js";
+import CustomRouter from '../CustomRouter.js';
 
+const authView = new AuthViewRouter()
+const productsView = new ProductsViewRouter()
 
-const viewsRouter = Router()
-
-viewsRouter.get('/', async (req, res, next) => {
-    try {
-        return res.render('index', {
-            username: "Maxi"
+export default class ViewsRouter extends CustomRouter {
+    init() {
+        this.Create("/", [ "public" ], async (req, res, next) => {
+            try {
+                return res.render('index', {
+                    username: "Maxi"
+                })
+            } catch (error) {
+                next(error)
+            }
         })
-    } catch (error) {
-        next(error)
+
+        this.Use("/auth", authView.GetRouter())
+        this.Use("/products", productsView.GetRouter())
     }
-})
-
-viewsRouter.use('/auth', authViewRouter)
-viewsRouter.use('/products', productsViewRouter)
-
-viewsRouter.get('/orders', async (req, res, next) => {
-
-})
-
-export default viewsRouter
+}

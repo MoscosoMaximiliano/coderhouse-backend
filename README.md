@@ -234,3 +234,20 @@ En public se agregaron los siguientes scripts:
 - register
 - signout
 - third
+
+## sprint 8
+
+Se agrego el módulo:
+
+- passport-jwt
+
+Se refactorizo el código para que de base extiendan del padre `CustomRoute.js`
+
+Se crearon los middlewares:
+
+ - isAuth
+ - passCallback
+
+A los passport se agrego `jwt`
+
+
