@@ -17,12 +17,14 @@ import MongoStore from 'connect-mongo'
 import { Server } from 'socket.io'
 import { createServer } from 'http'
 import connectionOnSocket from "./src/utils/socket.js";
+import { args } from "./src/utils/args.js";
+import dotenv from "dotenv"
 
 import dbConnection from './src/utils/db.js'
 
 
 const server = express()
-const PORT = process.env.PORT || 9999
+const PORT = process.env.PORT || args.port
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
@@ -65,6 +67,12 @@ const router = new IndexRouter()
 server.use("/", router.GetRouter())
 server.use(errorHandler)
 server.use(pathHandler)
+server.use(
+    cors({
+        origin: true,
+        credentials: true
+    })
+)
 
 // server.listen(PORT, ready)
 
