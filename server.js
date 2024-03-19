@@ -13,18 +13,18 @@ import cookieParser from 'cookie-parser'
 import expressSession from "express-session";
 import sessionFileStore from 'session-file-store'
 import MongoStore from 'connect-mongo'
+import cors from 'cors'
 
 import { Server } from 'socket.io'
 import { createServer } from 'http'
 import connectionOnSocket from "./src/utils/socket.js";
-import { args } from "./src/utils/args.js";
-import dotenv from "dotenv"
+import env from "./src/utils/env.js";
 
 import dbConnection from './src/utils/db.js'
 
 
 const server = express()
-const PORT = process.env.PORT || args.port
+const PORT = env.PORT || env.port
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
@@ -47,10 +47,10 @@ server.use(morgan("dev"))
 
 
 const FileStore = sessionFileStore(expressSession)
-server.use(cookieParser(process.env.SECRET_SESSION))
+server.use(cookieParser(env.SECRET_SESSION))
 server.use(expressSession({
-    store: new MongoStore({ mongoUrl: process.env.MONGODB_URI, ttl: 7 * 24 * 60 * 60 }),
-    secret: process.env.SECRET_SESSION,
+    store: new MongoStore({ mongoUrl: env.MONGODB_URI, ttl: 7 * 24 * 60 * 60 }),
+    secret: env.SECRET_SESSION,
     resave: true,
     saveUninitialized: true
 }))

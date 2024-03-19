@@ -4,7 +4,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { CreateHash, VerifyHash } from "../utils/hash.js";
 import { UserDB } from "../data/mongo/MongoManager.js";
 import { GenerateToken } from "../utils/token.js";
-import { Strategy as JwtEstStrategy, ExtractJwt } from "passport-jwt";
+import { ExtractJwt, Strategy as JwtEstStrategy } from "passport-jwt";
+
+import env from "../utils/env.js"
 
 passport.use(
   "register",
@@ -47,12 +49,15 @@ passport.use(
   )
 );
 
+
+console.log(env.JWT_SECRET)
+
 passport.use(
   "jwt",
   new JwtEstStrategy(
     {
       jwtFromRequest: ExtractJwt.fromExtractors([ (req) => req?.cookies.token ]),
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: env.JWT_SECRET,
     },
     async (jwtPayload, done) => {
       try {
@@ -67,6 +72,7 @@ passport.use(
     }
   )
 )
+
 
 passport.use(
   "google",

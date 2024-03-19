@@ -7,7 +7,7 @@
   "scripts": {
     "sprint1": "node server/data/memory/index.mjs",
     "sprint2": "node server/data/fs/index.js",
-    "dev": "nodemon ./server.js",
+    "dev": "nodemon ./server.js --env dev",
     "start": "node ./server/server.js"
   },
   "keywords": [],
