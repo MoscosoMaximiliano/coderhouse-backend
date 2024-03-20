@@ -2,9 +2,9 @@ import { Command } from 'commander'
 
 const args = new Command()
 
-args.option("--port", "-p", "Define the port", process.env.PORT, 9999)
+args.option("-p <port>", "Define the port")
 
-args.option("--env", "-e", "Define the environment", process.env.ENV, "dev")
+args.option("--env <env>", "Define the environment", "prod")
 
 args.parse()
 

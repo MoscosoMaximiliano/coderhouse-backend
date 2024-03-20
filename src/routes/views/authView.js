@@ -2,7 +2,7 @@ import CustomRouter from '../CustomRouter.js';
 
 export default class AuthRouter extends CustomRouter {
     init() {
-        this.Create('/register', [ "public" ], async (req, res, next) => {
+        this.create('/register', [ "public" ], async (req, res, next) => {
             try {
                 return res.render('register')
             } catch (error) {
@@ -10,7 +10,7 @@ export default class AuthRouter extends CustomRouter {
             }
         })
 
-        this.Create('/login', [ "public" ], async (req, res, next) => {
+        this.create('/login', [ "public" ], async (req, res, next) => {
             try {
                 return res.render('login')
             } catch (error) {

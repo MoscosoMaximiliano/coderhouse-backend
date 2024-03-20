@@ -9,7 +9,7 @@ class MongoManager {
     this.model = model
   }
 
-  async Create(data) {
+  async create(data) {
     try {
       const one = await this.model.create(data);
       return one;
@@ -17,7 +17,7 @@ class MongoManager {
       throw error;
     }
   }
-  async Read({ filter, sortPaginate }) {
+  async read({ filter, sortPaginate }) {
     try {
       sortPaginate = {...sortPaginate, lean: true, limit: 10, page: 1}
       const all = await this.model
@@ -37,7 +37,7 @@ class MongoManager {
       throw error;
     }
   }
-  async ReadOne(id) {
+  async readOne(id) {
     try {
       const one = await this.model.findById(id);
       notFoundOne(one);
@@ -46,7 +46,7 @@ class MongoManager {
       throw error;
     }
   }
-  async Update(id, data) {
+  async update(id, data) {
     try {
       const opt = { new: true };
       const one = await this.model.findByIdAndUpdate(id, data, opt);
@@ -56,7 +56,7 @@ class MongoManager {
       throw error;
     }
   }
-  async Destroy(id) {
+  async destroy(id) {
     try {
       const one = await this.model.findByIdAndDelete(id);
       notFoundOne(one);
@@ -65,7 +65,7 @@ class MongoManager {
       throw error;
     }
   }
-  async Stats({ filter }) {
+  async stats({ filter }) {
     try {
       let stats = await this.model.find(filter).explain("executionStats");
       console.log(stats);
@@ -78,7 +78,7 @@ class MongoManager {
       throw error;
     }
   }
-  async Report(uid) {
+  async report(uid) {
     try {
       console.log(uid)
       const report = await this.model.aggregate([
@@ -123,7 +123,7 @@ class MongoManager {
     }
   }
 
-  async ReadByEmail(email) {
+  async readByEmail(email) {
     try {
       const one = await this.model.findOne({ email });
       return one;
@@ -133,12 +133,14 @@ class MongoManager {
   }
 }
 
-const UserDB = new MongoManager(User)
-const ProductDB = new MongoManager(Product)
-const OrderDB = new MongoManager(Order)
+// const UserDB = new MongoManager(User)
+// const ProductDB = new MongoManager(Product)
+// const OrderDB = new MongoManager(Order)
 
-export {
-  UserDB,
-  ProductDB,
-  OrderDB
-}
+// export {
+//   UserDB,
+//   ProductDB,
+//   OrderDB
+// }
+
+export default MongoManager

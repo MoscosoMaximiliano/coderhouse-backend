@@ -63,8 +63,7 @@ server.set('views', __dirname + '/src/views')
 
 //routes
 
-const router = new IndexRouter()
-server.use("/", router.GetRouter())
+server.use("/", IndexRouter)
 server.use(errorHandler)
 server.use(pathHandler)
 server.use(

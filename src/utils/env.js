@@ -5,7 +5,6 @@ const envs = args.env
 const pathEnv = (envs) ? ".env.dev" : ".env.prod"
 config({ path: pathEnv })
 
-console.log(envs, process.env.PORT)
 
 export default {
     PORT: process.env.PORT,
