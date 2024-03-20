@@ -68,7 +68,7 @@ server.use(errorHandler)
 server.use(pathHandler)
 server.use(
     cors({
-        origin: true,
+        origin: 'http://localhost:5173',
         credentials: true
     })
 )
