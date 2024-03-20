@@ -1,13 +1,20 @@
-import { Router } from "express";
-import usersRouter from "./users.js";
-import productsRouter from "./products.js";
-import ordersRouter from "./orders.js";
+import UsersRouter from "./users.js";
+import ProductsRouter from "./products.js";
+import OrdersRouter from "./orders.js";
+import SessionsRouter from "./sessions.js";
+import CommentRouter from './comments.js'
 
+import CustomRouter from "../CustomRouter.js";
 
-const apiRouter = Router()
+class ApiRouter extends CustomRouter {
+    init() {
+        this.use("/users", UsersRouter)
+        this.use("/products", ProductsRouter)
+        this.use("/orders", OrdersRouter)
+        this.use("/sessions", SessionsRouter)
+        this.use("/comments", CommentRouter)
+    }
+}
 
-apiRouter.use("/users", usersRouter)
-apiRouter.use("/products", productsRouter)
-apiRouter.use("/orders", ordersRouter)
-
-export default apiRouter
+const apiRouter = new ApiRouter()
+export default apiRouter.getRouter()

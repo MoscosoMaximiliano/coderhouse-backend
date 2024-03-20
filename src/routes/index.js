@@ -1,10 +1,16 @@
-import { Router } from "express";
-import apiRouter from "./apis/index.js"
-import viewsRouter from './views/index.js'
+import ApiRouter from "./apis/index.js"
+import ViewsRouter from './views/index.js'
+import CustomRouter from "./CustomRouter.js";
 
-const router = Router()
+const views = new ViewsRouter();
+const viewsRouter = views.getRouter();
 
-router.use("/api", apiRouter)
-router.use("/", viewsRouter)
+class IndexRouter extends CustomRouter {
+    init() {
+        this.router.use("/api", ApiRouter)
+        this.router.use("/", viewsRouter)
+    }
+}
 
-export default router
+const router = new IndexRouter()
+export default router.getRouter()

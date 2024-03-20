@@ -1,125 +1,21 @@
-import { Router } from "express";
-import ProductManager from "../../data/fs/productManager.js";
-import ProductHandler from "../../middleware/productHandler.js"
+import CustomRouter from "../CustomRouter.js";
+import {
+  create,
+  read,
+  readOne,
+  update,
+  destroy,
+} from "../../controllers/products.js";
 
-import {ProductDB} from '../../data/mongo/MongoManager.js'
+class EventsRouter extends CustomRouter {
+  init() {
+    this.create("/", ["ADMIN", "PREM"], create);
+    this.read("/", ["PUBLIC"], read);
+    this.read("/:eid", ["PUBLIC"], readOne);
+    this.update("/:eid", ["ADMIN", "PREM"], update);
+    this.destroy("/:eid", ["ADMIN", "PREM"], destroy);
+  }
+}
 
-const productsRouter = Router()
-
-/*
-productsRouter.post("/", ProductHandler, async(req, res, next) => {
-    try {
-        const response = await ProductManager.Create(req.body)
-
-        return res.json({
-            statusCode: 201,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.get("/", async (req, res, next) => {
-    try {
-        const response = await ProductManager.Read()
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.get("/:pid", async (req, res, next) => {
-    try {
-        const response = await ProductManager.ReadOne(req.params.pid)
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.put("/:pid", ProductHandler, async (req, res, next) => {
-    try {
-        const response = await ProductManager.Update(req.params.pid, req.body)
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.delete("/:pid", async (req, res, next) => {
-    try {
-        const response = await ProductManager.Destroy(req.params.pid)
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-*/
-
-productsRouter.post("/", ProductHandler, async(req, res, next) => {
-    try {
-        const response = await ProductDB.Create(req.body)
-
-        return res.json({
-            statusCode: 201,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.get("/", async (req, res, next) => {
-    try {
-        const response = await ProductDB.Read({})
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.get("/:pid", async (req, res, next) => {
-    try {
-        const response = await ProductDB.ReadOne(req.params.pid)
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.put("/:pid", ProductHandler, async (req, res, next) => {
-    try {
-        const response = await ProductDB.Update(req.params.pid, req.body)
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-productsRouter.delete("/:pid", async (req, res, next) => {
-    try {
-        const response = await ProductDB.Destroy(req.params.pid)
-        return res.json({
-            statusCode: 200,
-            response
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-
-export default productsRouter
+const eventsRouter = new EventsRouter();
+export default eventsRouter.getRouter();
