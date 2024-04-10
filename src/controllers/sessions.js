@@ -1,5 +1,12 @@
+import service from '../services/users.service.js'
+
 class SessionsController {
+  constructor() {
+    this.service = service;
+  }
   register = async (req, res, next) => {
+    const { email, name, verifiedCode } = req.user;
+    await this.service.register({ email, name, verifiedCode });
     try {
       return res.success201("Registered!");
     } catch (error) {
@@ -54,6 +61,27 @@ class SessionsController {
   badauth = (req, res, next) => {
     try {
       return res.error401();
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+  verifyAccount = async (req, res, next) => {
+    try {
+      const { email, verifiedCode } = req.body;
+      const user = await service.readByEmail(email);
+      if (user.verifiedCode === verifiedCode) {
+        await service.update(user._id, { verified: true });
+        return res.json({
+          statusCode: 200,
+          message: "Verified user!",
+        });
+      } else {
+        return res.json({
+          statusCode: 400,
+          message: "Invalid verified token!",
+        });
+      }
     } catch (error) {
       return next(error);
     }
