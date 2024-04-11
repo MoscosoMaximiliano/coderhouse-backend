@@ -3,10 +3,12 @@ import "dotenv/config.js"
 
 import IndexRouter from "./src/routes/index.js";
 import pathHandler from "./src/middleware/pathHandler.js";
-import errorHandler from "./src/middleware/errorHandler.js";
+// import errorHandler from "./src/middleware/errorHandler.js";
+import errorHandler from "./src/middleware/errors/index.js"
 
 import { __dirname } from "./utils.js";
 import morgan from "morgan";
+import compression from "express-compression"
 
 import { engine } from 'express-handlebars'
 import cookieParser from 'cookie-parser'
@@ -72,6 +74,12 @@ server.use(
         credentials: true
     })
 )
+server.use(compression({
+    brotli: {
+        enabled: true,
+        zlib: {}
+    }
+}))
 
 // server.listen(PORT, ready)
 
