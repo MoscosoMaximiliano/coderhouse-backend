@@ -250,4 +250,22 @@ Se crearon los middlewares:
 
 A los passport se agrego `jwt`
 
+## sprint 9
 
+Se agregaron los entornos de test y prod
+
+`npm run test`
+`npm run prod`
+
+Se reestructuro el código de:
+
+- MongoManager
+- Api (General)
+
+Se agrego: 
+
+- Repositories
+- DTO
+- Models (Mongo)
+- Controllers
+- Services
