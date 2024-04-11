@@ -4,7 +4,7 @@ const productsViewRouter = Router()
 
 productsViewRouter.get('/form', async (req, res, next) => {
     try {
-        return res.render('form', {})
+        return res.render('form')
     } catch (error) {
         next(error)
     }

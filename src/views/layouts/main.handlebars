@@ -27,10 +27,16 @@
                 <a class="nav-link" href="/real">Real</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="/form">Form</a>
+                <a class="nav-link" href="/products/form">Form</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="/auth/register">Register</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/auth/login">Login</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/auth/signout">Signout</a>
                 </li>
             </ul>
             </div>
@@ -53,5 +59,26 @@
             <p class="copyright">E-commerce © 2024</p>
         </footer>
     </div>
+
+    <script>
+        var token = localStorage.getItem('token')
+
+        if (!token) {
+            document.querySelectorAll('a.nav-link').forEach(function(link) {
+                if (link.getAttribute('href') === '/products/form' || 
+                    link.getAttribute('href') === '/real' || 
+                    link.getAttribute('href') === "/auth/signout") {
+                    link.style.visibility = 'hidden';
+                }
+            });
+        } else {
+            document.querySelectorAll('a.nav-link').forEach(function(link) {
+                if (link.getAttribute('href') === '/auth/login' || 
+                    link.getAttribute('href') === '/auth/register') {
+                    link.style.visibility = 'hidden';
+                }
+            });
+        }
+    </script>
 </body>
 </html>

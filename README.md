@@ -185,3 +185,52 @@ Se agregaron las siguientes dependencias:
 Se agregaron el handlebar de login
 
 Tambien se agrego la api de auth
+
+
+## refactor code
+
+Cambios en el código para refactorizar
+
+Se agrego los siguientes módulos:
+
+- bcrypt
+- jsonwebtoken
+- passport
+- passport-google-oauth2
+- passport-local
+
+Se agregaron los siguientes utils:
+
+- token
+- hash
+
+Se cambio:
+
+- isValidPAss
+
+
+Se modifico los handlebars para que funcionen con autenticación
+
+- main
+- login
+- register
+
+Se cambio las API's:
+
+- sessions
+- authView
+- productsView
+
+
+Se agregaron los siguientes middlewares:
+
+- isAdmin
+- passport
+
+
+En public se agregaron los siguientes scripts:
+
+- login
+- register
+- signout
+- third
