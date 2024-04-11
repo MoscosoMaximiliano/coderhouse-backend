@@ -1,95 +1,68 @@
-import { Router } from "express";
-import OrderManager from '../../data/fs/orderManager.js'
+import CustomRouter from "../../routes/CustomRouter.js";
 
-import {OrderDB} from '../../data/mongo/MongoManager.js'
+import { OrderDB } from '../../data/mongo/MongoManager.js'
 
-const ordersRouter = Router()
+export default class OrdersRouter extends CustomRouter {
 
-ordersRouter.post("/", async (req, res, next) => {
-  try {
-    const data = req.body;
-    const one = await OrderDB.Create(data);
-    return res.json({
-      statusCode: 201,
-      response: one,
+  init() {
+    this.Create("/", [ "public" ], async (req, res, next) => {
+      try {
+        const data = req.body;
+        const one = await OrderDB.Create(data);
+        res.success201(one)
+      } catch (error) {
+        return next(error);
+      }
     });
-  } catch (error) {
-    return next(error);
-  }
-});
 
-ordersRouter.get("/", async (req, res, next) => {
-  try {
-    const filter = {};
-    if (req.query.user_id) {
-      filter.user_id = req.query.user_id;
-    }
-    const all = await OrderDB.Read({ filter });
-    return res.json({
-      statusCode: 200,
-      response: all,
+    this.Read("/", [ "public" ], async (req, res, next) => {
+      try {
+        const all = await OrderDB.Read({});
+        res.success200(all)
+      } catch (error) {
+        return next(error);
+      }
     });
-  } catch (error) {
-    return next(error);
-  }
-});
-  
-ordersRouter.get("/total/:uid", async (req, res, next) => {
-  console.log("getting total")
-  try {
-    const { uid } = req.params
-    const response = await OrderDB.Report(uid)
-    if (!response)
-      throw new Error("No orders for this user")
 
-    return res.json({
-      statusCode: 200,
-      response
+    this.Read("/:oid", [ "public" ], async (req, res, next) => {
+      try {
+        const { oid } = req.params
+        const response = await OrderDB.ReadOne(oid)
+        res.success200(response)
+      } catch (error) {
+        return next(error)
+      }
+    });
+
+    this.Update("/:oid", [ "public" ], async (req, res, next) => {
+      try {
+        const { oid } = req.params
+        const data = req.body
+        const response = await OrderDB.Update(oid, data)
+        res.success200(response)
+      } catch (error) {
+        return next(error)
+      }
+    });
+
+    this.Destroy("/:oid", [ "public" ], async (req, res, next) => {
+      try {
+        const { oid } = req.params
+        const response = await OrderDB.Destroy(oid)
+        res.success200(response)
+      } catch (error) {
+        return next(error)
+      }
+    });
+
+    this.Read("/total/:uid", [ "public" ], async (req, res, next) => {
+      try {
+        const { uid } = req.params
+        const response = await OrderDB.Report(uid)
+        res.success200(response)
+      } catch (error) {
+        return next(error)
+      }
     })
-  } catch (error) {
-    return next(error)
   }
-})
-
-ordersRouter.get("/:uid", async (req, res, next) => {
-    try {
-      const { uid } = req.params;
-      const filter = { order_id: uid };
-      const all = await OrderDB.Read({ filter });
-      return res.json({
-        statusCode: 200,
-        response: all,
-      });
-    } catch (error) {
-      return next(error);
-    }
-});
-ordersRouter.put("/:oid", async (req, res, next) => {
-    try {
-      const { oid } = req.params;
-      const data = req.body;
-      const one = await OrderDB.Update(oid, data);
-      return res.json({
-        statusCode: 200,
-        response: one,
-      });
-    } catch (error) {
-      return next(error);
-    }
-});
-ordersRouter.delete("/:oid", async (req, res, next) => {
-    try {
-      const { oid } = req.params;
-      const one = await OrderDB.Destroy(oid);
-      return res.json({
-        statusCode: 200,
-        response: one,
-      });
-    } catch (error) {
-      return next(error);
-    }
-});
-
-
-  
-export default ordersRouter
+}

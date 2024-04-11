@@ -1,11 +1,11 @@
 import express from "express"
-import  "dotenv/config.js"
+import "dotenv/config.js"
 
-import router from "./src/routes/index.js"
+import IndexRouter from "./src/routes/index.js";
 import pathHandler from "./src/middleware/pathHandler.js";
 import errorHandler from "./src/middleware/errorHandler.js";
 
-import {__dirname} from "./utils.js";
+import { __dirname } from "./utils.js";
 import morgan from "morgan";
 
 import { engine } from 'express-handlebars'
@@ -20,8 +20,9 @@ import connectionOnSocket from "./src/utils/socket.js";
 
 import dbConnection from './src/utils/db.js'
 
+
 const server = express()
-const PORT = 9999
+const PORT = process.env.PORT || 9999
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
@@ -38,15 +39,15 @@ socketServer.on('connection', connectionOnSocket)
 //middleware
 
 server.use(express.json())
-server.use(express.urlencoded({extended: true}))
-server.use(express.static(__dirname+"/public"))
+server.use(express.urlencoded({ extended: true }))
+server.use(express.static(__dirname + "/public"))
 server.use(morgan("dev"))
 
 
 const FileStore = sessionFileStore(expressSession)
 server.use(cookieParser(process.env.SECRET_SESSION))
 server.use(expressSession({
-    store: new MongoStore({mongoUrl: process.env.MONGODB_URI, ttl: 7 * 24 * 60 * 60}),
+    store: new MongoStore({ mongoUrl: process.env.MONGODB_URI, ttl: 7 * 24 * 60 * 60 }),
     secret: process.env.SECRET_SESSION,
     resave: true,
     saveUninitialized: true
@@ -60,7 +61,8 @@ server.set('views', __dirname + '/src/views')
 
 //routes
 
-server.use("/", router)
+const router = new IndexRouter()
+server.use("/", router.GetRouter())
 server.use(errorHandler)
 server.use(pathHandler)
 
