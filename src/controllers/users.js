@@ -1,4 +1,7 @@
 import service from "../services/users.service.js";
+import EErrors from "../services/errors/enums.js";
+import CustomError from "../services/errors/customError.js";
+import { generateUserErrorInfo } from "../services/errors/info.js";
 
 class UsersController {
   constructor() {
@@ -7,6 +10,12 @@ class UsersController {
   create = async (req, res, next) => {
     try {
       const data = req.body;
+      if (!data.email || !data.password || !data.name) {
+        throw CustomError.createError({
+          name: EErrors.MISSING_REQUIRED_FIELDS,
+          message: generateUserErrorInfo(data),
+        })
+      }
       const response = await this.service.create(data);
       return res.success201(response);
     } catch (error) {
