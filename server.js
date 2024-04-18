@@ -24,8 +24,13 @@ import env from "./src/utils/env.js";
 
 import dbConnection from './src/utils/db.js'
 
+import { addLogger } from "./src/utils/logger.js";
+
 
 const server = express()
+
+server.use(addLogger)
+
 const PORT = env.PORT || env.port
 
 const ready = () => {
