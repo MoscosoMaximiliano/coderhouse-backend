@@ -26,6 +26,9 @@ import dbConnection from './src/utils/db.js'
 
 import { addLogger } from "./src/utils/logger.js";
 
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerOptions from "./src/config/swagger.js";
+import { serve, setup } from 'swagger-ui-express';
 
 const server = express()
 
@@ -85,6 +88,10 @@ server.use(compression({
         zlib: {}
     }
 }))
+
+//swagger
+const specs = swaggerJSDoc(swaggerOptions)
+server.use('/api/docs', serve, setup(specs))
 
 // server.listen(PORT, ready)
 
