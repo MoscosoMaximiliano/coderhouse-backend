@@ -1,0 +1,115 @@
+components:
+  schemas:
+    Register-product:
+      type: object
+      properties:
+        title: 
+          type: string
+          description: Name of the product
+        price: 
+          type: number
+          description: Price of the product
+        photo: 
+          type: string
+          description: Photo of the product
+        stock: 
+          type: number
+          description: Stock of the product
+      example:
+        title: "title"
+        price: 100
+        photo: "https://random.responsiveimages.io/300/300"
+        stock: 10
+  response:
+    success:
+      type: object
+      properties:
+        status:
+          type: string
+          example: Successful Code
+        payload:
+          type: string
+          properties:
+            _id: 
+              type: string
+            title: 
+              type: string
+            price: 
+              type: number
+            photo: 
+              type: string
+            stock: 
+              type: number
+            createdAt: 
+              type: string
+            updatedAt: 
+              type: string
+          example:
+            status: success
+            payload:
+              _id: 123
+              title: "title"
+              price: 100
+              photo: "https://random.responsiveimages.io/300/300"
+              stock: 10
+              createdAt: "2020-01-01T00:00:00.000Z"
+              updatedAt: "2020-01-01T00:00:00.000Z"
+
+  paths:
+    api/products/:
+      post:
+        summary: Register a new product
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+        responses:
+          201:
+            description: User created
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/response/success'
+      get:
+        summary: Get all products
+        responses:
+          201:
+            description: Get all products
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/response/success'
+    api/products/:pid:
+      put:
+        summary: Update a product
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+        responses:
+          201:
+            description: Update a product
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/response/success'
+      delete:
+        summary: Delete a product
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+        responses:
+          201:
+            description: Delete a product
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/response/success'
+  

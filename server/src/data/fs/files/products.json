@@ -1,0 +1,23 @@
+[
+  {
+    "id": "50b360f6998af90d5b0c22a4",
+    "title": "Las aventuras de Narnia 2",
+    "photo": "https://random.responsiveimages.io/300/300",
+    "price": 1000,
+    "stock": 3000
+  },
+  {
+    "title": "Las aventuras de Narnia La revelión",
+    "photo": "https://random.responsiveimages.io/300/300",
+    "price": "1000",
+    "stock": "3000",
+    "id": "dd85428f237d2f97b61f6715"
+  },
+  {
+    "id": "2776ec4d6ad4dfad02f356af",
+    "title": "Dragon Ball Z",
+    "photo": "https://random.responsiveimages.io/300/300",
+    "price": "123",
+    "stock": "12"
+  }
+]
