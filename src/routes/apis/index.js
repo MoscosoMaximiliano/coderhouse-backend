@@ -3,6 +3,7 @@ import ProductsRouter from "./products.js";
 import OrdersRouter from "./orders.js";
 import SessionsRouter from "./sessions.js";
 import CommentRouter from './comments.js'
+import paymentsRouter from "./payments.js";
 
 import CustomRouter from "../CustomRouter.js";
 
@@ -13,6 +14,7 @@ class ApiRouter extends CustomRouter {
         this.use("/orders", OrdersRouter)
         this.use("/sessions", SessionsRouter)
         this.use("/comments", CommentRouter)
+        this.use("/payment", paymentsRouter)
     }
 }
 

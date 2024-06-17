@@ -33,7 +33,8 @@ switch (environment) {
     const { default: usersMongo } = await import("./mongo/users.js")
     const { default: ordersMongo } = await import("./mongo/orders.js")
     const { default: commentsMongo } = await import("./mongo/comments.js")
-    dao = { events: productsMongo, users: usersMongo, orders: ordersMongo, comments: commentsMongo }
+    const { default: cartsMongo } = await import("./mongo/CartsManager.js")
+    dao = { events: productsMongo, users: usersMongo, orders: ordersMongo, comments: commentsMongo, carts: cartsMongo }
     break;
   default:
     break;

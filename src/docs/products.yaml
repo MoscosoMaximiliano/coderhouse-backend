@@ -1,17 +1,20 @@
-# this.create("/", ["ADMIN", "PREM"], create);
-#     this.read("/", ["PUBLIC"], read);
-#     this.read("/:eid", ["PUBLIC"], readOne);
-#     this.update("/:eid", ["ADMIN", "PREM"], update);
-#     this.destroy("/:eid", ["ADMIN", "PREM"], destroy);
 components:
   schemas:
-    Register:
+    Register-product:
       type: object
       properties:
-        title: string
-        price: number
-        photo: string
-        stock: number
+        title: 
+          type: string
+          description: Name of the product
+        price: 
+          type: number
+          description: Price of the product
+        photo: 
+          type: string
+          description: Photo of the product
+        stock: 
+          type: number
+          description: Stock of the product
       example:
         title: "title"
         price: 100
@@ -27,13 +30,20 @@ components:
         payload:
           type: string
           properties:
-            _id: string
-            title: string
-            price: number
-            photo: string
-            stock: number
-            createdAt: string
-            updatedAt: string
+            _id: 
+              type: string
+            title: 
+              type: string
+            price: 
+              type: number
+            photo: 
+              type: string
+            stock: 
+              type: number
+            createdAt: 
+              type: string
+            updatedAt: 
+              type: string
           example:
             status: success
             payload:

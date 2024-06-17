@@ -7,7 +7,7 @@ const productsView = new ProductsViewRouter()
 
 export default class ViewsRouter extends CustomRouter {
     init() {
-        this.read("/", [ "public" ], async (req, res, next) => {
+        this.read("/", [ "PUBLIC" ], async (req, res, next) => {
             try {
                 return res.render('index', {
                     username: "Maxi"

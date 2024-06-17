@@ -32,9 +32,14 @@ import { serve, setup } from 'swagger-ui-express';
 
 const server = express()
 
+
 server.use(addLogger)
 
 const PORT = env.PORT || env.port
+
+//swagger
+const specs = swaggerJSDoc(swaggerOptions)
+server.use('/api/docs', serve, setup(specs))
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
@@ -76,11 +81,13 @@ server.set('views', __dirname + '/src/views')
 server.use("/", IndexRouter)
 server.use(errorHandler)
 server.use(pathHandler)
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200
+}
 server.use(
-    cors({
-        origin: 'http://localhost:5173',
-        credentials: true
-    })
+    cors(corsOptions)
 )
 server.use(compression({
     brotli: {
@@ -89,9 +96,7 @@ server.use(compression({
     }
 }))
 
-//swagger
-const specs = swaggerJSDoc(swaggerOptions)
-server.use('/api/docs', serve, setup(specs))
+
 
 // server.listen(PORT, ready)
 

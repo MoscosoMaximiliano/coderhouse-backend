@@ -1,5 +1,5 @@
 import { createTransport } from "nodemailer";
-import { __dirname } from "../../utils";
+import { __dirname } from "../../utils.js";
 
 async function sendEmail(data) {
     try {

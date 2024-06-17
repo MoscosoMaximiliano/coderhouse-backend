@@ -1,14 +1,14 @@
 import argsUtil from "../utils/args.js";
 import crypto from "crypto";
 
-import { createHash } from "../utils/hash.js";
+import { CreateHash } from "../utils/hash.js";
 
 class UserDTO {
   constructor(data) {
     argsUtil.env !== "prod" &&
       (this._id = crypto.randomBytes(12).toString("hex"));
     this.email = data.email;
-    this.password = createHash(data.password);
+    this.password = CreateHash(data.password);
     this.name = data.name;
     this.lastName = data.lastName;
     this.photo = data.photo || "https://i.postimg.cc/wTgNFWhR/profile.png";
