@@ -17,7 +17,7 @@ passport.use(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
       try {
-        let one = await users.ReadByEmail(email);
+        let one = await users.readByEmail(email);
         if (!one) {
           let data = req.body;
           data.password = CreateHash(password);
@@ -39,7 +39,7 @@ passport.use(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
       try {
-        const user = await users.ReadByEmail(email);
+        const user = await users.readByEmail(email);
         if (user && VerifyHash(password, user.password)) {
           req.token = GenerateToken({ email, role: user.role });
           return done(null, user);
@@ -63,7 +63,7 @@ passport.use(
     },
     async (jwtPayload, done) => {
       try {
-        const user = await users.ReadByEmail(jwtPayload.email);
+        const user = await users.readByEmail(jwtPayload.email);
         if (!user) {
           return done(null, false);
         }
@@ -88,7 +88,7 @@ passport.use(
     async (req, accessToken, refreshToken, profile, done) => {
       try {
         console.log(profile);
-        let user = await users.ReadByEmail(profile.id + "@gmail.com");
+        let user = await users.readByEmail(profile.id + "@gmail.com");
         if (!user) {
           user = {
             email: profile.id + "@gmail.com",

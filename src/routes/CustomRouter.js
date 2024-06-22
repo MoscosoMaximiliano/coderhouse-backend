@@ -1,4 +1,4 @@
-import { Router } from "express"
+import {Router} from "express"
 import jwt from "jsonwebtoken"
 
 import dao from "../data/index.js"
@@ -53,8 +53,7 @@ class CustomRouter {
               (role === 1 && arrayOfPolicies.includes("ADMIN")) ||
               (role === 2 && arrayOfPolicies.includes("PREM"))
             ) {
-              const user = await users.readByEmail(email);
-              req.user = user;
+                req.user = await users.readByEmail(email);
               return next();
             } else return res.error403();
           }

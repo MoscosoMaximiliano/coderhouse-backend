@@ -11,10 +11,10 @@ import morgan from "morgan";
 import compression from "express-compression"
 
 import { engine } from 'express-handlebars'
-import cookieParser from 'cookie-parser'
-import expressSession from "express-session";
-import sessionFileStore from 'session-file-store'
-import MongoStore from 'connect-mongo'
+// import cookieParser from 'cookie-parser'
+// import expressSession from "express-session";
+// import sessionFileStore from 'session-file-store'
+// import MongoStore from 'connect-mongo'
 import cors from 'cors'
 
 import { Server } from 'socket.io'
@@ -43,7 +43,9 @@ server.use('/api/docs', serve, setup(specs))
 
 const ready = () => {
     console.log(`Server Ready on port ${PORT}`)
-    dbConnection()
+    dbConnection().then((connection) => {
+        console.log(`Database Connected: ${connection.dbName}`)
+    } )
 }
 
 //websocket
@@ -61,14 +63,14 @@ server.use(express.static(__dirname + "/public"))
 server.use(morgan("dev"))
 
 
-const FileStore = sessionFileStore(expressSession)
-server.use(cookieParser(env.SECRET_SESSION))
-server.use(expressSession({
-    store: new MongoStore({ mongoUrl: env.MONGODB_URI, ttl: 7 * 24 * 60 * 60 }),
-    secret: env.SECRET_SESSION,
-    resave: true,
-    saveUninitialized: true
-}))
+// const FileStore = sessionFileStore(expressSession)
+// server.use(cookieParser(env.SECRET_SESSION))
+// server.use(expressSession({
+//     store: new MongoStore({ mongoUrl: env.MONGODB_URI, ttl: 7 * 24 * 60 * 60 }),
+//     secret: env.SECRET_SESSION,
+//     resave: true,
+//     saveUninitialized: true
+// }))
 
 //handlebars
 

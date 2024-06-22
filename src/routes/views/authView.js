@@ -4,7 +4,7 @@ export default class AuthRouter extends CustomRouter {
     init() {
         this.create('/register', [ "PUBLIC" ], async (req, res, next) => {
             try {
-                return res.rediect('register')
+                return res.redirect('register')
             } catch (error) {
                 next(error)
             }
