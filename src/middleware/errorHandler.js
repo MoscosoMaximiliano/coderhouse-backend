@@ -1,5 +1,7 @@
+import {addLogger} from "../utils/logger.js";
+
 const ErrorHandler = (error, req, res, next) => {
-    console.log(error)
+    addLogger.error(error)
     return res.json({
         status: 500,
         message: `${req.method}${req.url}${error.message}`

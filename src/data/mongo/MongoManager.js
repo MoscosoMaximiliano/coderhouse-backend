@@ -1,4 +1,5 @@
 import notFoundOne from '../../utils/notFoundOne.js'
+import {addLogger} from "../../utils/logger.js";
 import {Types} from "mongoose";
 
 class MongoManager {
@@ -28,7 +29,7 @@ class MongoManager {
         error.statusCode = 404;
         throw error;
       }
-      console.log(all)
+      addLogger.info(all)
       return all;
     } catch (error) {
       throw error;

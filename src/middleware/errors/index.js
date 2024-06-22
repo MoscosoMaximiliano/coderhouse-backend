@@ -1,7 +1,8 @@
 import EEnums from "../../services/errors/enums.js";
+import {addLogger} from "../../utils/logger.js";
 
 export default (error, req, res, next) => {
-    console.log(error.cause)
+    addLogger.error(error.cause)
     switch (error.code) {
         case EEnums.UNAUTHORIZED:
             return res.status(401).json(error)

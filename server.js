@@ -42,9 +42,9 @@ const specs = swaggerJSDoc(swaggerOptions)
 server.use('/api/docs', serve, setup(specs))
 
 const ready = () => {
-    console.log(`Server Ready on port ${PORT}`)
+    addLogger.http(`Server Ready on port ${PORT}`)
     dbConnection().then((connection) => {
-        console.log(`Database Connected: ${connection.dbName}`)
+        addLogger.info(`Database Connected: ${connection.dbName}`)
     } )
 }
 
