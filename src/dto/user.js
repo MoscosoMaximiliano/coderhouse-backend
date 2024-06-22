@@ -8,7 +8,8 @@ class UserDTO {
     argsUtil.env !== "prod" &&
       (this._id = crypto.randomBytes(12).toString("hex"));
     this.email = data.email;
-    this.password = CreateHash(data.password);
+    // this.password = CreateHash(data.password); old
+    this.password = data.password;
     this.name = data.name;
     this.lastName = data.lastName;
     this.photo = data.photo || "https://i.postimg.cc/wTgNFWhR/profile.png";
