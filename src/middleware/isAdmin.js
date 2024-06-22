@@ -1,4 +1,6 @@
 import { VerifyToken } from "../utils/token.js"
+import CustomError from "../services/errors/customError.js";
+import errors from "../services/errors/enums.js";
 
 const IsAdmin = (req, res, next) => {
     try {
@@ -6,10 +8,7 @@ const IsAdmin = (req, res, next) => {
         if (data.role === "admin") {
             return next()
         }
-        return res.status(403).json({
-            statusCode: 403,
-            message: "Forbidden"
-        })
+        return CustomError.createError(errors.FORBIDDEN)
     } catch (error) {
         return next(error)
     }
