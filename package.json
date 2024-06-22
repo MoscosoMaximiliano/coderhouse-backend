@@ -11,7 +11,8 @@
     "test": "nodemon ./server.js --env test",
     "prod": "nodemon ./server.js --env prod",
     "start": "node ./server.js",
-    "mockup-products": "node ./src/data/mocks/products.js"
+    "mockup-products": "node ./src/data/mocks/products.js",
+    "supertest": "mocha ./test/supertest"
   },
   "keywords": [],
   "author": "",
@@ -46,6 +47,9 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1"
+    "@faker-js/faker": "^8.4.1",
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0",
+    "supertest": "^7.0.0"
   }
 }
