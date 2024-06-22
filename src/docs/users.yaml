@@ -1,6 +1,6 @@
 components:
   schemas:
-    Register-user:
+    RegisterUser:
       type: object
       properties:
         id:
@@ -20,35 +20,61 @@ components:
         name: John
         email: 9hFv6@example.com
         role: user
-  response:
-    success:
+
+    LoginRequest:
       type: object
       properties:
-        status:
+        username:
           type: string
-          example: Successful Code
-        payload:
+        password:
           type: string
-          properties:
-            id:
-              type: string
-              description: User id
-            name:
-              type: string
-              description: User name
-            email:
-              type: string
-              description: User email
-            role:
-              type: string
-              description: User role
-          example:
-            status: success
-            payload:
-              id: 1
-              name: John
-              email: 9hFv6@example.com
-              role: user
+        verificationCode:
+          type: string
+      required:
+        - username
+        - password
+        - verificationCode
+
+    TokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+
+    LogoutRequest:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+        - token
+
+  response:
+    UserRegistered:
+      description: User registered successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+
+      UserLoggedIn:
+        description: User logged in successfully
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenResponse'
+
+      NoContent:
+        description: No content
+
+      BadRequest:
+        description: Invalid input
+
+      Unauthorized:
+        description: Unauthorized
+
+      NotFound:
+        description: User not found
 
   paths:
     api/users/register:
@@ -59,12 +85,49 @@ components:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Register'
+                $ref: '#/components/schemas/RegisterUser'
         responses:
           '201':
             description: User created
             content:
               application/json:
                 schema:
-                  $ref: '#/components/response/success'
+                  $ref: '#/components/response/UserRegistered'
+
+    api/users/login:
+      post:
+        summary: Login a user
+        requestBody:
+          $ref: '#/components/requestBodies/LoginRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UserLoggedIn'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+
+    api/users/logout:
+      post:
+        summary: Logout a user
+        responses:
+          '204':
+            $ref: '#/components/responses/NoContent'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+
+    api/users/{userId}:
+      delete:
+        summary: Delete a user
+        parameters:
+          - name: userId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            $ref: '#/components/responses/NoContent'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
   
