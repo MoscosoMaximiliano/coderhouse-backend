@@ -1,6 +1,6 @@
 import crypto from "crypto"
 
-import {__dirname, WriteFile, GetAllData, FileCheck} from '../../../utils.js'
+import {WriteFile, GetAllData, FileCheck} from '../../../utils.js'
 
 
 class ProductManager {

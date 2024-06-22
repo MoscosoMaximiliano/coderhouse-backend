@@ -56,7 +56,6 @@ class OrdersController {
   };
 }
 
-export default OrdersController;
 const controller = new OrdersController();
 const { create, read, update, destroy } = controller;
 export { create, read, update, destroy };

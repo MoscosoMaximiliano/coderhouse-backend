@@ -1,6 +1,6 @@
 import crypto from "crypto"
 
-import {__dirname, WriteFile, GetAllData, FileCheck} from "../../../utils.js"
+import {WriteFile, GetAllData, FileCheck} from "../../../utils.js"
 
 class OrdersManager {
     static path = "./src/data/fs/files/orders.json"

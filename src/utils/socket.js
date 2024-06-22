@@ -1,5 +1,3 @@
-import { socketServer } from "../../server.js";
-// import { ProductDB } from "../data/mongo/MongoManager.js";
 import PropsProductsHandler from "./propsProductsHandler.js";
 
 

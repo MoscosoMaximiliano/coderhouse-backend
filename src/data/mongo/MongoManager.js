@@ -1,8 +1,5 @@
-import Order from "./models/OrderModel.js";
-import Product from "./models/ProductModel.js";
-import User from "./models/UserModel.js";
-
 import notFoundOne from '../../utils/notFoundOne.js'
+import {Types} from "mongoose";
 
 class MongoManager {
   constructor(model) {
@@ -65,63 +62,63 @@ class MongoManager {
       throw error;
     }
   }
-  async stats({ filter }) {
-    try {
-      let stats = await this.model.find(filter).explain("executionStats");
-      console.log(stats);
-      stats = {
-        quantity: stats.executionStats.nReturned,
-        time: stats.executionStats.executionTimeMillis,
-      };
-      return stats;
-    } catch (error) {
-      throw error;
-    }
-  }
-  async report(uid) {
-    try {
-      console.log(uid)
-      const report = await this.model.aggregate([
-        //$match productos de un usuario en el carrito (las órdenes de un usuario)
-        { $match: { user_id: new Types.ObjectId(uid) } },
-        //$lookup para popular los eventos
-        {
-          $lookup: {
-            from: "events",
-            foreignField: "_id",
-            localField: "event_id",
-            as: "event_id",
-          },
-        },
-        //$replaceRoot para mergear el objeto con el objeto cero del array populado
-        {
-          $replaceRoot: {
-            newRoot: {
-              $mergeObjects: [ { $arrayElemAt: [ "$event_id", 0 ] }, "$$ROOT" ],
-            },
-          },
-        },
-        //$set para agregar la propiedad subtotal = price*quantity
-        { $set: { subtotal: { $multiply: [ "$price", "$quantity" ] } } },
-        //$group para agrupar por user_id y sumar los subtotales
-        { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } },
-        //$project para limpiar el objeto (dejar sólo user_id, total y date)
-        {
-          $project: {
-            _id: false,
-            user_id: "$_id",
-            total: "$total",
-            date: new Date(),
-            currency: "USD",
-          },
-        },
-        //{ $merge: { into: "bills" }}
-      ]);
-      return report;
-    } catch (error) {
-      throw error;
-    }
-  }
+  // async stats({ filter }) {
+  //   try {
+  //     let stats = await this.model.find(filter).explain("executionStats");
+  //     console.log(stats);
+  //     stats = {
+  //       quantity: stats.executionStats.nReturned,
+  //       time: stats.executionStats.executionTimeMillis,
+  //     };
+  //     return stats;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+  // async report(uid) {
+  //   try {
+  //     console.log(uid)
+  //     const report = await this.model.aggregate([
+  //       //$match productos de un usuario en el carrito (las órdenes de un usuario)
+  //       { $match: { user_id: new Types.ObjectId(uid) } },
+  //       //$lookup para popular los eventos
+  //       {
+  //         $lookup: {
+  //           from: "events",
+  //           foreignField: "_id",
+  //           localField: "event_id",
+  //           as: "event_id",
+  //         },
+  //       },
+  //       //$replaceRoot para mergear el objeto con el objeto cero del array populado
+  //       {
+  //         $replaceRoot: {
+  //           newRoot: {
+  //             $mergeObjects: [ { $arrayElemAt: [ "$event_id", 0 ] }, "$$ROOT" ],
+  //           },
+  //         },
+  //       },
+  //       //$set para agregar la propiedad subtotal = price*quantity
+  //       { $set: { subtotal: { $multiply: [ "$price", "$quantity" ] } } },
+  //       //$group para agrupar por user_id y sumar los subtotales
+  //       { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } },
+  //       //$project para limpiar el objeto (dejar sólo user_id, total y date)
+  //       {
+  //         $project: {
+  //           _id: false,
+  //           user_id: "$_id",
+  //           total: "$total",
+  //           date: new Date(),
+  //           currency: "USD",
+  //         },
+  //       },
+  //       //{ $merge: { into: "bills" }}
+  //     ]);
+  //     return report;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
   async readByEmail(email) {
     try {

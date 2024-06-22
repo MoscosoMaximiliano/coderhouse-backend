@@ -16,4 +16,4 @@ const createProducts = async () => {
     }
 }
 
-createProducts()
+createProducts().then(r => console.log("Created Successfully"))

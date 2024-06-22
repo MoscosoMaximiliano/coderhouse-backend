@@ -5,7 +5,6 @@ import {
   register,
   login,
   google,
-  github,
   me,
   signout,
   badauth,

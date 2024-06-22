@@ -67,7 +67,6 @@ class CommentsController {
   };
 }
 
-export default CommentsController;
 const controller = new CommentsController();
 const { create, read, readOne, update, destroy } = controller;
 export { create, read, readOne, update, destroy };

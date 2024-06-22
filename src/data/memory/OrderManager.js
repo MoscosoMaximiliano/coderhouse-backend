@@ -1,4 +1,4 @@
-export class OrderManager {
+export default class OrderManager {
     static #orders = []
     constructor(){}
 

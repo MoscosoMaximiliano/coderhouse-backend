@@ -1,4 +1,3 @@
-import { Router } from "express";
 import checkoutController from "../../controllers/payments.js";
 import CustomRouter from "../CustomRouter.js";
 
