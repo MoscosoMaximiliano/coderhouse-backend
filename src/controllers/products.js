@@ -1,4 +1,6 @@
 import service from "../services/products.service.js";
+import CustomError from "../services/errors/customError.js";
+import EEnums from "../services/errors/enums.js";
 
 class EventsController {
   constructor() {

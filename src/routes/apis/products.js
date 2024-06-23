@@ -4,16 +4,16 @@ import {
   read,
   readOne,
   update,
-  destroy,
+  destroy
 } from "../../controllers/products.js";
 
 class EventsRouter extends CustomRouter {
   init() {
-    this.create("/", ["ADMIN", "PREM"], create);
-    this.read("/", ["PUBLIC"], read);
-    this.read("/:eid", ["PUBLIC"], readOne);
-    this.update("/:eid", ["ADMIN", "PREM"], update);
-    this.destroy("/:eid", ["ADMIN", "PREM"], destroy);
+    this.create("/", [ "ADMIN", "PREM" ], create);
+    this.read("/", [ "PUBLIC" ], read);
+    this.read("/:eid", [ "PUBLIC" ], readOne);
+    this.update("/:eid", [ "ADMIN", "PREM" ], update);
+    this.destroy("/:eid", [ "ADMIN", "PREM" ], destroy);
   }
 }
 

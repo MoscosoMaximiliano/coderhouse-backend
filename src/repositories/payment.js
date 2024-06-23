@@ -35,6 +35,7 @@ class CheckoutController {
     async checkout(req, res, next) {
         try {
             const { user_id } = req.session;
+            req.logger.info(user_id)
             //ubicar donde está el user_id
             const response = await checkoutRepository({ user_id });
             return res.json(response);
