@@ -1,4 +1,7 @@
 import service from '../services/users.service.js'
+import errors from "../middleware/errors/index.js";
+import nodemailer from "nodemailer";
+import sendEmail from "../utils/sendEmail.js";
 
 class SessionsController {
   constructor() {
@@ -86,9 +89,54 @@ class SessionsController {
       return next(error);
     }
   };
+  reset = async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      const user = await service.readByEmail(email);
+      if (!user) {
+        return res.json({
+          statusCode: 401,
+          message: "User not found!",
+        })
+      }
+
+      const token = crypto.randomBytes(20).toString("hex");
+      user.resetTokenPassword = token
+      user.resetPasswordExpiration = new Date() + 3600000
+
+      await user.save()
+
+      const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'your-email@gmail.com',
+          pass: 'your-email-password',
+        },
+      });
+
+      const mailOptions = {
+        to: user.email,
+        from: 'passwordreset@yourdomain.com',
+        subject: 'Password Reset',
+        text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+                   Please click on the following link, or paste this into your browser to complete the process:\n\n
+                   http://${req.headers.host}/reset/${token}\n\n
+                   If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Successfully sent!",
+      })
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export default SessionsController;
 const controller = new SessionsController();
-const { register, login, google, github, me, signout, badauth } = controller;
-export { register, login, google, github, me, signout, badauth };
+const { register, login, google, github, me, signout, badauth, reset } = controller;
+export { register, login, google, github, me, signout, badauth, reset };
