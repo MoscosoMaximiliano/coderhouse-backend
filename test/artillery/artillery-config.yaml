@@ -1,0 +1,32 @@
+config:
+  target: "http://localhost:9999/api"  
+  phases:
+    - duration: 60  
+      arrivalRate: 5 
+  payload:
+    inline:
+      - email: "maxmoscoso@gmail.com"
+        password: "password123456789"
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: User Login, Read, and Signout
+    flow:
+      - post:
+          url: "sessions/login"
+          json:
+            email: "{{ email }}"
+            password: "{{ password }}"
+          capture:
+            - json: "$.token"
+              as: "authToken"
+      - get:
+          url: "sessions/"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+      - post:
+          url: "sessions/signout"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
