@@ -11,10 +11,7 @@ class UsersController {
     try {
       const data = req.body;
       if (!data.email || !data.password || !data.name) {
-        throw CustomError.createError({
-          name: EErrors.MISSING_REQUIRED_FIELDS,
-          message: generateUserErrorInfo(data),
-        })
+        throw CustomError.createError(EErrors.MISSING_REQUIRED_FIELDS)
       }
       const response = await this.service.create(data);
       return res.success201(response);

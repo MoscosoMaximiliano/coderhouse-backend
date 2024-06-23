@@ -1,6 +1,6 @@
 import argsUtil from "../utils/args.js";
 import dbConnection from "../utils/dbConnection.js"
-import {addLogger} from "../utils/logger.js";
+import { addLogger } from "../utils/logger.js";
 
 const environment = argsUtil.env;
 
@@ -11,7 +11,7 @@ let dao = {};
 switch (environment) {
   case "test":
     //vamos a usar MEMORY
-    addLogger.info("MEMORY CONNECTED");
+    console.log("MEMORY CONNECTED");
     const { default: productsMemory } = await import("./memory/productManager.js")
     const { default: usersMemory } = await import("./memory/userManager.js")
     const { default: ordersMemory } = await import("./memory/orderManager.js")
@@ -19,7 +19,7 @@ switch (environment) {
     break;
   case "dev":
     //vamos a usar FS
-    addLogger.info("FS CONNECTED");
+    console.log("FS CONNECTED");
     const { default: productsFs } = await import("./fs/productManager.js")
     const { default: usersFs } = await import("./fs/userManager.js")
     const { default: ordersFs } = await import("./fs/orderManager.js")
@@ -29,7 +29,7 @@ switch (environment) {
     //vamos a usar MONGO
     //aca es necesario configurar la conexión de mongo
     dbConnection()
-      .then(() => addLogger.http("MONGO CONNECTED"))
+      .then(() => console.log("MONGO CONNECTED"))
     const { default: productsMongo } = await import("./mongo/products.js")
     const { default: usersMongo } = await import("./mongo/users.js")
     const { default: ordersMongo } = await import("./mongo/orders.js")
